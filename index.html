@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indian Stock List</title>
+</head>
+<body>
+  <h1>BSE Stocks</h1>
+  <ul id="stockList"></ul>
+
+  <script>
+    async function fetchStocks() {
+      const response = await fetch('http://localhost:3000/api/stocks');
+      const stocks = await response.json();
+
+      const stockList = document.getElementById('stockList');
+      stockList.innerHTML = '';
+
+      stocks.forEach(stock => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${stock.symbol}: ${stock.name} - ${stock.currency} - ${stock.exchange}`;
+        stockList.appendChild(listItem);
+      });
+    }
+
+    fetchStocks();
+  </script>
+</body>
+</html>
